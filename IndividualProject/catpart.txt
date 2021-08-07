@@ -1,0 +1,87 @@
+# OPTION:
+  Presence of -f:
+       None.
+       One.
+       Many.                 [single]
+  Presence of -n:
+       None.
+       One.
+       Many.                 [single]
+  Presence of -s:
+       None.
+       One.                 [property sone]
+       Many.                [property smany][single]
+  Presence of -r:
+       None.
+       One.                 [property rone]
+       Many.                [property rmany][single]
+  Presence of -g:
+       None.
+       One.                 [if (rone || rmany)]
+       Many.                [single][if (rone || rmany)]
+       Without -r.          [if !(rone || rmany)][error]
+  Presence of -i:
+       None.                [property izero][single]
+       One.                 [property ione] [if rone || rmany || sone || smany]
+       Many.                [property imany] [if rone || rmany || sone || smany][single]
+       Without -r and -s.   [if (!(rone || rmany)) && (!(sone || smany))][error]
+  Presence of -p:
+       None.                [single]
+       One.                 [property pone]
+       Many.                [property pmany][single]
+
+# File
+  Size:
+       Empty.               [property emptyfile][single]
+       Not empty.
+  Number of occurrences of the string s in the file case insensitive:
+       None.                [if !emptyfile && !(sone || smany)][property nooccurences_s]
+       One.                 [if !emptyfile && (sone || smany)]
+       Many.                [if !emptyfile && (sone || smany)][single]
+  Number of occurrences of the string s in one line case insensitive:
+       One.                 [if !nooccurences_s && !emptyfile && (sone || smany)]
+       Many.                [if !nooccurences_s && !emptyfile && (sone || smany)][single]
+       Many and contain Non-matching case.   [single][if izero]
+  Number of occurrences of the string1 r in the file case insensitive:
+       None.                [if !emptyfile && !(rone || rmany)][property nooccurences_r1]
+       One.                 [if !emptyfile && (rone || rmany)]
+       Many.                [single][if !emptyfile && (rone || rmany)]
+  Number of occurrences of the string1 r in one line case insensitive:
+       One.                 [if !nooccurences_r1 && !emptyfile && (rone || rmany)]
+       Many.                [if !nooccurences_r1 && !emptyfile && (rone || rmany)][single]
+       Many and contain Non-matching case.   [single][[if izero]]
+
+
+#string s
+ String s Content:
+       No present.                           [if (sone || smany)][error]
+       "".                              [if (sone || smany)][single]
+       Alphanumeric characters.         [if (sone || smany)]
+       Special characters.              [if (sone || smany)][single]
+       Mixed.                           [if (sone || smany)][single]
+       White spaces only.               [if (sone || smany)][single]
+
+#string r
+ String r1 Content:
+       No present.                          [if (rone || rmany)][error]
+       "".                              [if (sone || smany)][error]
+       Alphanumeric characters.        [if (rone || rmany)]
+       Special characters.             [if (rone || rmany)][single]
+       Mixed.                          [if (rone || rmany)][single]
+       White spaces only.              [if (rone || rmany)][single]
+ String r2 Content:
+       No present.                          [if (rone || rmany)][error]
+       Alphanumeric characters.        [if (rone || rmany)]
+       Special characters.             [if (rone || rmany)][single]
+       Mixed.                          [if (rone || rmany)][single]
+       White spaces only.              [if (rone || rmany)][single]
+
+#string p
+ String p Content:
+       No present.                          [if (pone || pmany)][error]
+       Alphanumeric characters.       [if (pone || pmany)][single]
+       Special characters.            [if (pone || pmany)][single]
+       Mixed.                         [if (pone || pmany)]
+       White spaces only.             [if (pone || pmany)][single]
+
+
